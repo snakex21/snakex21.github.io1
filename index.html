@@ -1,109 +1,40 @@
 <!DOCTYPE html>
-
 <html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Opis">
+        <meta name="keywords" content="Słowo kluczowe 1, Słowo kluczowe 2">
+        <meta name="author" content="Tomasz Gądek">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <title>NBP</title>
+    </head>
+    <body>
+        <p>
+            Aktualnie obowiązująca cena złota w dniu: <span id="date"></span>
+        </p>
+        <p>
+            Cena: <span id="price"></span> za 1 g.
+        </p>
 
+        <script type="text/javascript">
+            // wprowadz adres do przegladarki i zobacz, co takiego sie wyswietli
+            fetch('http://api.nbp.pl/api/cenyzlota?format=json')
+                .then(response => response.json())
+                .then(response => {
+                    // tutaj obslugujemy dane (parametr 'response') z serwera (json)
+                    console.log(response); 
 
-<head>
+                    // 'response' to tablica - odwoluje sie do 1 elementu (idx = 0)
+                    let priceGold = response[0];
 
-    <meta charset="utf-8">
+                    console.log('cena = ' + priceGold.cena);
+                    console.log('data = ' + priceGold.data);
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-    <link rel="stylesheet" href="bmi.css">
-
-
-
-    <title>BMI</title>
-
-
-
-       
-
-                     
-
-        <script type="text/javascript" src="bmi.js"></script>
-
-             
-
-    
-
-</head>
-
-
-
-<body>
-
-    <header>
-
-<h1>Wskaznik BMI - kalkulator online</h1>
-
-    </header>
-
-    <nav><ul>
-
-        <li><button class="menu"><a href="home.html">Home</a></button></li>
-
-        <li><button class="menu"><a href="kontakt.html">Kontakt</a></button></li>
-
-        <li><button class="menu"><a href="zdrowejedzenie.html">Zdrowe Jedzenie</a></button</li>
-
-      </ul></nav>
-
-    <main>
-
-        <div class="calculate-bmi">
-
-            <div>
-
-                <label for="weight">waga (kg)</label><br>
-
-                <input type="number" id="weight" name="weight" min="0">
-
-            </div>
-
-            <div class="calculate-bmi">
-
-                <div>
-
-                    <label for="height">wzrost (cm)</label><br>
-
-                    <input type="number" id="height" name="height" min="0">
-
-                </div>
-
-                <div>
-
-                    <button class = "oblicz" onclick="calculatebmi()">oblicz</button>
-
-                </div>
-
-        </div>
-
-        <div class="result-bmi">
-
-            <div>
-
-                <strong>bmi</strong> wynosi: <span id="bmi"></span>
-
-            </div>
-
-
-
-        </div>
-
-    </main>
-
-    <footer>
-
-        <p>&copy; 2022 | Maksymilian </p>
-
-
-
-    </footer>
-
-</body>
-
+                    document.getElementById("price").innerHTML = priceGold.cena;
+                    document.getElementById("date").innerHTML = priceGold.data;
+                })
+                .catch(err => console.error(err)); // obsluga w przypadku bledu!
+        </script>
+    </body>
 </html>
