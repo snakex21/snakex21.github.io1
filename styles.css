@@ -10,3 +10,13 @@ body {
 #my-video {
   width: 100%;
 }
+
+.video-item {
+  display: inline-block;
+  width: 300px;
+  margin: 10px;
+}
+
+.video-item img {
+  width: 100%;
+}
